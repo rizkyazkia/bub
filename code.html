@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BUB</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Playfair+Display:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-secondary-fixed-variant": "#484743",
+                "on-primary-fixed": "#410008",
+                "on-surface": "#1e1b18",
+                "error-container": "#ffdad6",
+                "surface-bright": "#fff8f5",
+                "outline-variant": "#dbc0bf",
+                "surface-tint": "#9d4043",
+                "tertiary": "#735c00",
+                "tertiary-fixed": "#ffe088",
+                "outline": "#887271",
+                "on-tertiary-container": "#4e3d00",
+                "on-secondary-container": "#666460",
+                "surface": "#fff8f5",
+                "surface-container": "#f5ece7",
+                "secondary-container": "#e6e2dd",
+                "on-background": "#1e1b18",
+                "on-primary-container": "#de7173",
+                "secondary-fixed": "#e6e2dd",
+                "on-tertiary-fixed-variant": "#574500",
+                "surface-variant": "#e9e1dc",
+                "on-primary-fixed-variant": "#7f292d",
+                "primary": "#360006",
+                "on-tertiary-fixed": "#241a00",
+                "surface-container-high": "#efe6e2",
+                "on-secondary": "#ffffff",
+                "secondary-fixed-dim": "#c9c6c1",
+                "surface-container-low": "#fbf2ed",
+                "on-tertiary": "#ffffff",
+                "on-secondary-fixed": "#1c1c19",
+                "tertiary-container": "#cba72f",
+                "secondary": "#605e5b",
+                "inverse-on-surface": "#f8efea",
+                "primary-fixed": "#ffdad9",
+                "surface-container-highest": "#e9e1dc",
+                "surface-dim": "#e1d8d4",
+                "surface-container-lowest": "#ffffff",
+                "inverse-primary": "#ffb3b2",
+                "on-error": "#ffffff",
+                "tertiary-fixed-dim": "#e9c349",
+                "background": "#fff8f5",
+                "on-primary": "#ffffff",
+                "on-surface-variant": "#554242",
+                "error": "#ba1a1a",
+                "primary-fixed-dim": "#ffb3b2",
+                "primary-container": "#580b14",
+                "inverse-surface": "#34302c",
+                "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "unit": "8px",
+                "container-max": "1140px",
+                "margin-mobile": "20px",
+                "gutter": "24px",
+                "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                "label-caps": ["Manrope"],
+                "display-lg-mobile": ["Playfair Display"],
+                "body-md": ["Manrope"],
+                "headline-md": ["Playfair Display"],
+                "display-lg": ["Playfair Display"],
+                "headline-sm": ["Playfair Display"],
+                "body-lg": ["Manrope"]
+            },
+            "fontSize": {
+                "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "600"}],
+                "display-lg-mobile": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .petal-container {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background: #de7173;
+            border-radius: 150% 0 150% 0;
+            opacity: 0.3;
+            filter: blur(1px);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+            100% { transform: translateY(110vh) translateX(100px) rotate(360deg); }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .wax-seal {
+            box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3), 2px 2px 6px rgba(0,0,0,0.2);
+            background: linear-gradient(145deg, #7f292d, #580b14);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-fixed selection:text-primary min-h-screen overflow-x-hidden">
+<!-- Floating Petal Container -->
+<div class="petal-container" id="petal-overlay"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-40 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-tertiary/20 shadow-[0px_10px_30px_rgba(88,11,20,0.05)]">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-caps text-label-caps text-primary font-bold hover:text-tertiary transition-colors duration-300 cursor-pointer" href="#">Baca Pelan Pelan</a>
+<button class="cursor-pointer active:scale-95 transition-transform text-primary">
+</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative pt-32 pb-24 px-margin-mobile md:px-margin-desktop flex flex-col items-center text-center">
+<div class="max-w-3xl">
+<div class="flex justify-center mb-6">
+<span class="material-symbols-outlined text-tertiary text-4xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-primary mb-4 leading-tight"> I Just Wanna Say Something Bub</h1>
+<p class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">MAAF YA KALO KAYA SERIUS GITU</p>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pb-32">
+<!-- Opening Image Section -->
+<section class="mb-24 scroll-reveal">
+<div class="relative w-full max-w-4xl mx-auto border-[12px] border-surface-container shadow-[0px_10px_30px_rgba(88,11,20,0.05)]">
+<div class="aspect-[16/9] overflow-hidden">
+<img
+    class="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-[3s]"
+    src="q.jpeg"
+    alt="Foto Spesial"
+/>
+</div>
+<div class="absolute -bottom-8 -right-8 w-32 h-32 md:w-48 md:h-48 opacity-20 pointer-events-none">
+<span class="material-symbols-outlined text-primary text-[80px] md:text-[120px]">spa</span>
+</div>
+</div>
+</section>
+<!-- The Message Body -->
+<article class="max-w-2xl mx-auto space-y-16">
+<!-- Section 1 -->
+<section class="scroll-reveal">
+<div class="flex items-center justify-center gap-4 mb-8">
+<div class="h-px w-12 bg-tertiary/30"></div>
+<span class="material-symbols-outlined text-tertiary text-sm">circle</span>
+<div class="h-px w-12 bg-tertiary/30"></div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface text-center leading-relaxed italic mb-8">Aku tiba tiba kangen deh bub spend time together sama kamu berdua. Tapi aku ga berani aja ngomongnya karena aku gatau kamu nganggep aku apa aku juga gatau kamu nganggep hubungan kita gimana. aku tau diawal cuma main main atau temen gabut aja aku juga ga masalah, tpi aku gatau klo skrng ini kmu nganggep nya gimana yah? aku bukannya mau punya status yang jelas untuk saat ini aku cuma mau tau kamu nganggep aku dan hubungan kita apa.
+                   </p>
+<p class="font-body-lg text-body-lg text-on-surface text-center leading-relaxed italic">
+                    I just hope that there is a bit of sincere intention from you, if not now, maybe tomorrow or who knows when.
+                </p>
+</section>
+<!-- Middle Image Cluster (Asymmetric) -->
+<!-- Section 2 -->
+<section class="scroll-reveal">
+<div class="flex items-center justify-center mb-10">
+<span class="text-tertiary opacity-40">❦</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface text-center leading-relaxed mt-8">
+                    Maaf ya bub ribet banget pake ginian, biar ga terlalu kamu bosen aja bacanya. Responnya di chat aja yeah...
+                </p>
+</section>
+<!-- The "Wax Seal" Action -->
+<section class="flex flex-col items-center gap-6 py-12 scroll-reveal">
+<p class="font-label-caps text-label-caps text-secondary-fixed-dim"> Klik dibawah jika sudah selesai baca</p>
+<button class="wax-seal w-24 h-24 rounded-full flex items-center justify-center active:scale-90 transition-all duration-300 relative group overflow-hidden">
+<span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: 'FILL' 1;">ecg_heart</span>
+<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+</button>
+<p class="font-body-md text-body-md text-primary font-bold"> Anda tidak bisa merespon disini</p>
+</section>
+</article>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low w-full py-12">
+<div class="flex flex-col items-center gap-4 w-full text-center max-w-container-max mx-auto px-margin-mobile">
+<div class="h-px w-24 bg-tertiary/20 my-2"></div>
+<p class="font-body-md text-body-md text-primary italic max-w-md">"Terima Kasih Atas Waktunya Untuk Membuka."</p>
+<div class="flex gap-6 mt-4">
+<a class="font-body-md text-body-md text-secondary hover:text-tertiary transition-all" href="#">&#128149; </a>
+<a class="font-body-md text-body-md text-secondary hover:text-tertiary transition-all" href="#">&#128149;</a>
+<a class="font-body-md text-body-md text-secondary hover:text-tertiary transition-all" href="#">&#128149;</a>
+</div>
+</div>
+</footer>
+<script>
+        // Petal Animation Script
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            const size = Math.random() * 15 + 10;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.animation = `fall ${Math.random() * 10 + 10}s linear infinite`;
+            petal.style.opacity = Math.random() * 0.4 + 0.1;
+            
+            document.getElementById('petal-overlay').appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 15000);
+        }
+
+        setInterval(createPetal, 1500);
+
+        // Scroll Reveal Script
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // Interaction for the "Wax Seal"
+        const sealBtn = document.querySelector('.wax-seal');
+        if(sealBtn) {
+            sealBtn.addEventListener('click', () => {
+                const icon = sealBtn.querySelector('.material-symbols-outlined');
+                icon.textContent = 'check_circle';
+                icon.style.fontVariationSettings = "'FILL' 1";
+                alert('Sentiments Sealed with Love.');
+            });
+        }
+    </script>
+</body></html>
